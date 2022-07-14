@@ -58,6 +58,7 @@ void LfRfidAppSceneReadSuccess::on_enter(LfRfidApp* app, bool /* need_restore */
             string_get_cstr(string[2]), 68, 47, 0, AlignLeft, AlignBottom, FontSecondary);
         break;
     case LfrfidKeyType::KeyH10301:
+    case LfrfidKeyType::KeyH10302: // TODO STOPSHIP 35 bit cardholder ID
     case LfrfidKeyType::KeyI40134:
         line_1_text->set_text("HEX:", 65, 23, 0, AlignRight, AlignBottom, FontSecondary);
         line_2l_text->set_text("FC:", 65, 35, 0, AlignRight, AlignBottom, FontSecondary);

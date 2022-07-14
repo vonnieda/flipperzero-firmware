@@ -144,6 +144,23 @@ void RfidWriter::write_hid(const uint8_t hid_data[3]) {
     FURI_CRITICAL_EXIT();
 }
 
+// TODO STOPSHIP not yet implemented.
+void RfidWriter::write_hid37(const uint8_t hid_data[5]) {
+    ProtocolHID10301 hid_card;
+    uint32_t card_data[3];
+    hid_card.encode(hid_data, 3, reinterpret_cast<uint8_t*>(&card_data), sizeof(card_data) * 3);
+
+    const uint32_t hid_config_block_data = 0b00000000000100000111000001100000;
+
+    FURI_CRITICAL_ENTER();
+    write_block(0, 0, false, hid_config_block_data);
+    write_block(0, 1, false, card_data[0]);
+    write_block(0, 2, false, card_data[1]);
+    write_block(0, 3, false, card_data[2]);
+    write_reset();
+    FURI_CRITICAL_EXIT();
+}
+
 /** Endian fixup. Translates an ioprox block into a t5577 block */
 static uint32_t ioprox_encode_block(const uint8_t block_data[4]) {
     uint8_t raw_card_data[] = {block_data[3], block_data[2], block_data[1], block_data[0]};

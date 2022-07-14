@@ -9,6 +9,9 @@ const char* lfrfid_key_get_type_string(LfrfidKeyType type) {
     case LfrfidKeyType::KeyH10301:
         return "H10301";
         break;
+    case LfrfidKeyType::KeyH10302:
+        return "H10302";
+        break;
     case LfrfidKeyType::KeyI40134:
         return "I40134";
         break;
@@ -28,6 +31,9 @@ const char* lfrfid_key_get_manufacturer_string(LfrfidKeyType type) {
     case LfrfidKeyType::KeyH10301:
         return "HID";
         break;
+    case LfrfidKeyType::KeyH10302:
+        return "HID";
+        break;
     case LfrfidKeyType::KeyI40134:
         return "Indala";
         break;
@@ -45,6 +51,8 @@ bool lfrfid_key_get_string_type(const char* string, LfrfidKeyType* type) {
         *type = LfrfidKeyType::KeyEM4100;
     } else if(strcmp("H10301", string) == 0) {
         *type = LfrfidKeyType::KeyH10301;
+    } else if(strcmp("H10302", string) == 0) {
+        *type = LfrfidKeyType::KeyH10302;
     } else if(strcmp("I40134", string) == 0) {
         *type = LfrfidKeyType::KeyI40134;
     } else if(strcmp("IoProxXSF", string) == 0) {
@@ -63,6 +71,9 @@ uint8_t lfrfid_key_get_type_data_count(LfrfidKeyType type) {
         break;
     case LfrfidKeyType::KeyH10301:
         return 3;
+        break;
+    case LfrfidKeyType::KeyH10302:
+        return 5;
         break;
     case LfrfidKeyType::KeyI40134:
         return 3;

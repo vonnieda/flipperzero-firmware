@@ -3,6 +3,7 @@
 #include "decoder_gpio_out.h"
 #include "decoder_emmarin.h"
 #include "decoder_hid26.h"
+#include "decoder_hid37.h"
 #include "decoder_indala.h"
 #include "decoder_ioprox.h"
 #include "key_info.h"
@@ -34,6 +35,7 @@ private:
 #endif
     DecoderEMMarin decoder_em;
     DecoderHID26 decoder_hid26;
+    DecoderHID37 decoder_hid37;
     DecoderIndala decoder_indala;
     DecoderIoProx decoder_ioprox;
 

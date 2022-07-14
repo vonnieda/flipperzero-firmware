@@ -79,6 +79,11 @@ void RfidWorker::sq_write() {
             writer.write_hid(key.get_data());
             writer.stop();
             break;
+        case LfrfidKeyType::KeyH10302:
+            writer.start();
+            writer.write_hid37(key.get_data());
+            writer.stop();
+            break;
         case LfrfidKeyType::KeyI40134:
             writer.start();
             writer.write_indala(key.get_data());
@@ -97,6 +102,7 @@ void RfidWorker::sq_write_start_validate() {
     switch(key.get_type()) {
     case LfrfidKeyType::KeyEM4100:
     case LfrfidKeyType::KeyH10301:
+    case LfrfidKeyType::KeyH10302:
     case LfrfidKeyType::KeyIoProxXSF:
         reader.start_forced(RfidReader::Type::Normal);
         break;

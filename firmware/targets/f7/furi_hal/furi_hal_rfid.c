@@ -253,7 +253,7 @@ void furi_hal_rfid_change_read_config(float freq, float duty_cycle) {
 
 void furi_hal_rfid_comp_start() {
     LL_COMP_Enable(COMP1);
-    // Magic
+    // Magic (Startup delay tStart, see comments on LL_COMP_Enable)
     uint32_t wait_loop_index = ((80 / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
     while(wait_loop_index) {
         wait_loop_index--;

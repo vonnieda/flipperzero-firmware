@@ -46,6 +46,7 @@ void LfRfidAppSceneDeleteConfirm::on_enter(LfRfidApp* app, bool /* need_restore 
 
         break;
     case LfrfidKeyType::KeyH10301:
+    case LfrfidKeyType::KeyH10302: // TODO STOPSHIP 35 bit cardholder ID
     case LfrfidKeyType::KeyI40134:
         string_printf(
             string_decrypted, "FC: %u    ID: %u", data[0], (uint16_t)((data[1] << 8) | (data[2])));
