@@ -1,26 +1,5 @@
-#include "stream.h"
-#include "stream_i.h"
 #include "file_stream.h"
-
-typedef struct {
-    Stream stream_base;
-    Storage* storage;
-    File* file;
-} FileStream;
-
-static void file_stream_free(FileStream* stream);
-static bool file_stream_eof(FileStream* stream);
-static void file_stream_clean(FileStream* stream);
-static bool file_stream_seek(FileStream* stream, int32_t offset, StreamOffset offset_type);
-static size_t file_stream_tell(FileStream* stream);
-static size_t file_stream_size(FileStream* stream);
-static size_t file_stream_write(FileStream* stream, const uint8_t* data, size_t size);
-static size_t file_stream_read(FileStream* stream, uint8_t* data, size_t size);
-static bool file_stream_delete_and_insert(
-    FileStream* stream,
-    size_t delete_size,
-    StreamWriteCB write_callback,
-    const void* ctx);
+#include "file_stream_i.h"
 
 const StreamVTable file_stream_vtable = {
     .free = (StreamFreeFn)file_stream_free,
@@ -68,21 +47,21 @@ FS_Error file_stream_get_error(Stream* _stream) {
     return storage_file_get_error(stream->file);
 }
 
-static void file_stream_free(FileStream* stream) {
+void file_stream_free(FileStream* stream) {
     storage_file_free(stream->file);
     free(stream);
 }
 
-static bool file_stream_eof(FileStream* stream) {
+bool file_stream_eof(FileStream* stream) {
     return storage_file_eof(stream->file);
 }
 
-static void file_stream_clean(FileStream* stream) {
+void file_stream_clean(FileStream* stream) {
     storage_file_seek(stream->file, 0, true);
     storage_file_truncate(stream->file);
 }
 
-static bool file_stream_seek(FileStream* stream, int32_t offset, StreamOffset offset_type) {
+bool file_stream_seek(FileStream* stream, int32_t offset, StreamOffset offset_type) {
     bool result = false;
     size_t seek_position = 0;
     size_t current_position = file_stream_tell(stream);
@@ -125,15 +104,15 @@ static bool file_stream_seek(FileStream* stream, int32_t offset, StreamOffset of
     return result;
 }
 
-static size_t file_stream_tell(FileStream* stream) {
+size_t file_stream_tell(FileStream* stream) {
     return storage_file_tell(stream->file);
 }
 
-static size_t file_stream_size(FileStream* stream) {
+size_t file_stream_size(FileStream* stream) {
     return storage_file_size(stream->file);
 }
 
-static size_t file_stream_write(FileStream* stream, const uint8_t* data, size_t size) {
+size_t file_stream_write(FileStream* stream, const uint8_t* data, size_t size) {
     // TODO cache
     size_t need_to_write = size;
     while(need_to_write > 0) {
@@ -147,7 +126,7 @@ static size_t file_stream_write(FileStream* stream, const uint8_t* data, size_t 
     return size - need_to_write;
 }
 
-static size_t file_stream_read(FileStream* stream, uint8_t* data, size_t size) {
+size_t file_stream_read(FileStream* stream, uint8_t* data, size_t size) {
     // TODO cache
     size_t need_to_read = size;
     while(need_to_read > 0) {
@@ -161,7 +140,7 @@ static size_t file_stream_read(FileStream* stream, uint8_t* data, size_t size) {
     return size - need_to_read;
 }
 
-static bool file_stream_delete_and_insert(
+bool file_stream_delete_and_insert(
     FileStream* _stream,
     size_t delete_size,
     StreamWriteCB write_callback,

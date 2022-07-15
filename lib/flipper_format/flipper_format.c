@@ -2,6 +2,7 @@
 #include <toolbox/stream/stream.h>
 #include <toolbox/stream/string_stream.h>
 #include <toolbox/stream/file_stream.h>
+#include <toolbox/stream/file_stream_cached.h>
 #include "flipper_format.h"
 #include "flipper_format_i.h"
 #include "flipper_format_stream.h"
@@ -32,6 +33,13 @@ FlipperFormat* flipper_format_string_alloc() {
 FlipperFormat* flipper_format_file_alloc(Storage* storage) {
     FlipperFormat* flipper_format = malloc(sizeof(FlipperFormat));
     flipper_format->stream = file_stream_alloc(storage);
+    flipper_format->strict_mode = false;
+    return flipper_format;
+}
+
+FlipperFormat* flipper_format_file_cached_alloc(Storage* storage) {
+    FlipperFormat* flipper_format = malloc(sizeof(FlipperFormat));
+    flipper_format->stream = file_stream_cached_alloc(storage);
     flipper_format->strict_mode = false;
     return flipper_format;
 }

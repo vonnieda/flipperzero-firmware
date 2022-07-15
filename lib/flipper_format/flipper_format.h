@@ -116,6 +116,12 @@ FlipperFormat* flipper_format_string_alloc();
 FlipperFormat* flipper_format_file_alloc(Storage* storage);
 
 /**
+ * Allocate FlipperFormat as file with cached read operations.
+ * @return FlipperFormat* pointer to a FlipperFormat instance
+ */
+FlipperFormat* flipper_format_file_cached_alloc(Storage* storage);
+
+/**
  * Open existing file. 
  * Use only if FlipperFormat allocated as a file.
  * @param flipper_format Pointer to a FlipperFormat instance
