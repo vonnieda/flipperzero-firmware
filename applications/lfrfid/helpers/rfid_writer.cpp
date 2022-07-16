@@ -3,6 +3,7 @@
 #include <furi_hal.h>
 #include "protocols/protocol_emmarin.h"
 #include "protocols/protocol_hid_h10301.h"
+#include "protocols/protocol_hid_h10302.h"
 #include "protocols/protocol_indala_40134.h"
 
 /**
@@ -144,9 +145,8 @@ void RfidWriter::write_hid(const uint8_t hid_data[3]) {
     FURI_CRITICAL_EXIT();
 }
 
-// TODO STOPSHIP not yet implemented.
 void RfidWriter::write_hid37(const uint8_t hid_data[5]) {
-    ProtocolHID10301 hid_card;
+    ProtocolHID10302 hid_card;
     uint32_t card_data[3];
     hid_card.encode(hid_data, 3, reinterpret_cast<uint8_t*>(&card_data), sizeof(card_data) * 3);
 

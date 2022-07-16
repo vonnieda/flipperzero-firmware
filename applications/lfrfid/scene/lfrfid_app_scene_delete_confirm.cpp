@@ -46,11 +46,17 @@ void LfRfidAppSceneDeleteConfirm::on_enter(LfRfidApp* app, bool /* need_restore 
 
         break;
     case LfrfidKeyType::KeyH10301:
-    case LfrfidKeyType::KeyH10302: // TODO STOPSHIP 35 bit cardholder ID
     case LfrfidKeyType::KeyI40134:
         string_printf(
             string_decrypted, "FC: %u    ID: %u", data[0], (uint16_t)((data[1] << 8) | (data[2])));
         break;
+    case LfrfidKeyType::KeyH10302: {
+        uint16_t facility_code = (data[0] << 8) | (data[1] << 0);
+        uint32_t card_number = (data[2] << 16) | (data[3] << 8) | (data[4] << 0);
+        string_printf(
+            string_decrypted, "FC: %u    ID: %lu", facility_code, card_number);
+        break;
+    }
     case LfrfidKeyType::KeyIoProxXSF:
         string_printf(
             string_decrypted,

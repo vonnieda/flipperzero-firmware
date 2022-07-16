@@ -58,7 +58,6 @@ void LfRfidAppSceneReadSuccess::on_enter(LfRfidApp* app, bool /* need_restore */
             string_get_cstr(string[2]), 68, 47, 0, AlignLeft, AlignBottom, FontSecondary);
         break;
     case LfrfidKeyType::KeyH10301:
-    case LfrfidKeyType::KeyH10302: // TODO STOPSHIP 35 bit cardholder ID
     case LfrfidKeyType::KeyI40134:
         line_1_text->set_text("HEX:", 65, 23, 0, AlignRight, AlignBottom, FontSecondary);
         line_2l_text->set_text("FC:", 65, 35, 0, AlignRight, AlignBottom, FontSecondary);
@@ -78,6 +77,30 @@ void LfRfidAppSceneReadSuccess::on_enter(LfRfidApp* app, bool /* need_restore */
         line_3_value->set_text(
             string_get_cstr(string[2]), 68, 47, 0, AlignLeft, AlignBottom, FontSecondary);
         break;
+
+    case LfrfidKeyType::KeyH10302: {
+        line_1_text->set_text("HEX:", 65, 23, 0, AlignRight, AlignBottom, FontSecondary);
+        line_2l_text->set_text("FC:", 65, 35, 0, AlignRight, AlignBottom, FontSecondary);
+        line_3_text->set_text("Card:", 65, 47, 0, AlignRight, AlignBottom, FontSecondary);
+
+        for(uint8_t i = 0; i < app->worker.key.get_type_data_count(); i++) {
+            string_cat_printf(string[0], "%02X", data[i]);
+        }
+
+        uint16_t facility_code = (data[0] << 8) | (data[1] << 0);
+        uint32_t card_number = (data[2] << 16) | (data[3] << 8) | (data[4] << 0);
+        
+        string_printf(string[1], "%u", facility_code);
+        string_printf(string[2], "%lu", card_number);
+
+        line_1_value->set_text(
+            string_get_cstr(string[0]), 68, 23, 0, AlignLeft, AlignBottom, FontSecondary);
+        line_2l_value->set_text(
+            string_get_cstr(string[1]), 68, 35, 0, AlignLeft, AlignBottom, FontSecondary);
+        line_3_value->set_text(
+            string_get_cstr(string[2]), 68, 47, 0, AlignLeft, AlignBottom, FontSecondary);
+        break;
+    }
 
     case LfrfidKeyType::KeyIoProxXSF:
         line_1_text->set_text("HEX:", 65, 23, 0, AlignRight, AlignBottom, FontSecondary);

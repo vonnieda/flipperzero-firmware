@@ -212,13 +212,13 @@ bool LfRfidApp::save_key_data(string_t path, RfidKey* key) {
     do {
         if(!flipper_format_file_open_always(file, string_get_cstr(path))) break;
         if(!flipper_format_write_header_cstr(file, app_filetype, 1)) break;
-        if(!flipper_format_write_comment_cstr(file, "Key type can be EM4100, H10301 or I40134"))
+        if(!flipper_format_write_comment_cstr(file, "Key type can be EM4100, H10301, I40134, or H10302"))
             break;
         if(!flipper_format_write_string_cstr(
                file, "Key type", lfrfid_key_get_type_string(key->get_type())))
             break;
         if(!flipper_format_write_comment_cstr(
-               file, "Data size for EM4100 is 5, for H10301 is 3, for I40134 is 3"))
+               file, "Data size for EM4100 is 5, for H10301 is 3, for I40134 is 3, for H10302 is 5"))
             break;
         if(!flipper_format_write_hex(file, "Data", key->get_data(), key->get_type_data_count()))
             break;

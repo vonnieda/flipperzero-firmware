@@ -4,6 +4,7 @@
 #include "encoder_generic.h"
 #include "encoder_emmarin.h"
 #include "encoder_hid_h10301.h"
+#include "encoder_hid_h10302.h"
 #include "encoder_indala_40134.h"
 #include "encoder_ioprox.h"
 #include "pulse_joiner.h"
@@ -22,6 +23,7 @@ private:
     std::map<LfrfidKeyType, EncoderGeneric*> encoders = {
         {LfrfidKeyType::KeyEM4100, new EncoderEM()},
         {LfrfidKeyType::KeyH10301, new EncoderHID_H10301()},
+        {LfrfidKeyType::KeyH10302, new EncoderHID_H10302()},
         {LfrfidKeyType::KeyI40134, new EncoderIndala_40134()},
         {LfrfidKeyType::KeyIoProxXSF, new EncoderIoProx()},
     };
