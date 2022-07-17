@@ -148,7 +148,7 @@ void RfidWriter::write_hid(const uint8_t hid_data[3]) {
 void RfidWriter::write_hid37(const uint8_t hid_data[5]) {
     ProtocolHID10302 hid_card;
     uint32_t card_data[3];
-    hid_card.encode(hid_data, 3, reinterpret_cast<uint8_t*>(&card_data), sizeof(card_data) * 3);
+    hid_card.encode(hid_data, 5, reinterpret_cast<uint8_t*>(&card_data), sizeof(card_data) * 3);
 
     const uint32_t hid_config_block_data = 0b00000000000100000111000001100000;
 
